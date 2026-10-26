@@ -1,0 +1,32 @@
+### Login válido
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{"username":"aluno","senha":"Aluno123!"}
+
+### Execute duas vezes para bloquear aluno
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{"username":"aluno","senha":"errada"}
+
+### Desbloquear (somente administrador)
+PUT http://localhost:8080/unlock/aluno
+Authorization: Basic admin Admin123!
+
+### Cadastrar (somente manutenção)
+POST http://localhost:8080/
+Authorization: Basic manutencao Manut123!
+Content-Type: application/json
+
+{"username":"novo","senha":"Nova123!"}
+
+### Listar sem expor senhas
+GET http://localhost:8080/
+Authorization: Basic manutencao Manut123!
+
+### Troca pública, exige senha atual válida
+PUT http://localhost:8080/trocarsenha/novo
+Content-Type: application/json
+
+{"atual":"Nova123!","nova":"Outra123!"}
