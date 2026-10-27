@@ -111,27 +111,3 @@ mvn spring-boot:run -Dspring-boot.run.arguments=--app.demo=true
 Sem Docker, a API funciona normalmente; Prometheus e Grafana precisam ser executados à parte. Configure o alvo Prometheus como `localhost:9091` e seu datasource Grafana como `http://localhost:9090`. O gerenciamento usa a porta 9091, separada da aplicação (8080).
 
 Os testes de integração usam H2 em memória e verificam autenticação, permissões, cadastro, proteção de hashes, troca de senha, desbloqueio, concorrência e documentação. A configuração de Mockito usa o mecanismo de subclasses para executar sem anexar um agente à JVM; os testes exercitam a aplicação e banco reais, sem mocks de autenticação. O GitHub Actions executa `mvn verify` em cada push/PR.
-
-## Publicar em repositório público
-
-Crie um repositório vazio com visibilidade **Public**, depois execute nesta pasta:
-
-```sh
-git init -b main
-git add .
-git commit -m "Implementa login REST, roles, bloqueio e Grafana"
-git remote add origin https://github.com/SEU_USUARIO/login-spring-grafana.git
-git push -u origin main
-```
-
-Confirme que `docs/dashboard-grafana.png` e a exportação JSON estão versionados antes de entregar o link. `target/`, `.env` e o banco local são ignorados pelo Git.
-
-## Referências técnicas
-
-- https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/jdbc.html
-- https://springdoc.org/v2/
-- https://grafana.com/docs/grafana/latest/administration/provisioning/
-
-## Validação da entrega
-
-`mvn verify`: BUILD SUCCESS, 12 testes executados, nenhuma falha ou erro. Evidência em `docs/testes-integracao.txt`. API, Prometheus e Grafana foram executados como processos locais para gerar o print e a exportação. O Docker Compose foi validado estruturalmente, mas não executado neste ambiente, que não dispõe de Docker.
